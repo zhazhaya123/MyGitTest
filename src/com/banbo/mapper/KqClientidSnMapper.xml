@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banbo.mapper.KqClientidSnMapper">
+	<!-- Result Map -->
+	<resultMap id="BaseResultMap" type="com.banbo.entity.KqClientidSn">
+		<result column="nid" property="nid" />
+		<result column="ClientId" property="ClientId" />
+		<result column="SN" property="SN" />
+		<result column="DeviceType" property="DeviceType" />
+		<result column="Stamp" property="Stamp" />
+		<result column="OpStamp" property="OpStamp" />
+		<result column="PhotoStamp" property="PhotoStamp" />
+		<result column="ErrorDelay" property="ErrorDelay" />
+		<result column="Delay" property="Delay" />
+		<result column="TransTimes" property="TransTimes" />
+		<result column="TransInterval" property="TransInterval" />
+		<result column="TransFlag" property="TransFlag" />
+		<result column="RealTime" property="RealTime" />
+		<result column="Encrypt" property="Encrypt" />
+		<result column="TimeZone" property="TimeZone" />
+		<result column="AddTime" property="AddTime" />
+		<result column="Enabled" property="Enabled" />
+		<result column="DeviceName" property="DeviceName" />
+		<result column="Version" property="Version" />
+		<result column="PinCount" property="PinCount" />
+		<result column="FpCount" property="FpCount" />
+		<result column="FaceCount" property="FaceCount" />
+		<result column="AttCount" property="AttCount" />
+		<result column="Ip" property="Ip" />
+		<result column="HeartTime" property="HeartTime" />
+		<result column="LastAttPIN" property="LastAttPIN" />
+		<result column="LastAttTime" property="LastAttTime" />
+		<result column="LastAttLogId" property="LastAttLogId" />
+		<result column="Status" property="Status" />
+	</resultMap>
+
+	<select id="selectKqjAndSN" parameterType="String" resultMap="BaseResultMap">
+		SELECT * FROM `kq_clientid_sn` where SN = #{SN};
+	</select>
+
+
+	<update id="updateZkOpStamp"  parameterType="String">
+		update kq_clientid_sn set OpStamp =#{0} where SN = #{1};
+	</update>
+	
+	<update id="updateZkStamp"  parameterType="String">
+		update kq_clientid_sn set Stamp =#{0} where SN = #{1};
+	</update>
+</mapper>   

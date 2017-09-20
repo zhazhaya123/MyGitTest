@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banbo.mapper.KqAtworkMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.banbo.entity.KqAtwork" >
+	<result column="Awid" property="awid"/>
+	<result column="ClientId" property="clientId"/>
+	<result column="CurrWorkNo" property="currWorkNo"/>
+	<result column="UserId" property="userId"/>
+	<result column="AddTime" property="addTime"/>
+	<result column="Remarks" property="remarks"/>
+</resultMap>
+       
+<!-- kq_atwork table all fields -->
+<sql id="Base_Column_List" >
+	 Awid,ClientId,UserId,AddTime,Remarks
+</sql>
+   
+   
+
+   
+
+
+
+
+
+
+<!-- 正式项目开始代码begin -->
+	<insert id="insertOrUpdate" useGeneratedKeys="true"
+		parameterType="java.util.List">
+		insert into kq_atwork(ClientId,currWorkNo,AddTime,Remarks)
+		values
+		<foreach collection="list" item="item" open="" close=""
+			separator="," index="index">
+			 
+ (#{item.clientId,jdbcType=INTEGER},#{item.currWorkNo,jdbcType=VARCHAR},#{item.addTime,jdbcType=TIMESTAMP},#{item.remarks,jdbcType=VARCHAR})
+<!--  ON DUPLICATE KEY UPDATE
+ values(#{item.clientId,jdbcType=INTEGER},#{item.currWorkNo,jdbcType=VARCHAR},#{item.addTime,jdbcType=TIMESTAMP},#{item.remarks,jdbcType=VARCHAR})
+			ClientId = #{item.clientId,jdbcType=INTEGER},
+			UserId=#{item.userId,jdbcType=INTEGER},
+			AddTime=#{item.addTime,jdbcType=TIMESTAMP},
+			remarks=#{item.remarks,jdbcType=VARCHAR} -->
+			</foreach>
+			</insert>
+			<!-- 删除记录 -->
+<delete id="deleteList" parameterType="java.util.List">
+<foreach collection="list" item="item" open="" close=""
+			separator=";" index="index">
+	delete 	 from kq_atwork where currWorkNo = #{item.currWorkNo} and ClientId=#{item.clientId}
+	</foreach>
+</delete>
+<delete id="deleteClientid" parameterType="java.util.Map">
+
+	delete 	 from kq_atwork where ClientId=#{clientId}
+
+</delete>
+ <insert id="insertatwork" useGeneratedKeys="true"
+		parameterType="com.banbo.entity.KqAtwork">
+		insert into kq_atwork(ClientId,currWorkNo,AddTime,Remarks,UserId)
+		values
+		
+			 
+ (#{clientId,jdbcType=INTEGER},#{currWorkNo,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP},#{remarks,jdbcType=VARCHAR},#{userId,jdbcType=INTEGER})
+ ON DUPLICATE KEY UPDATE
+
+			ClientId = #{clientId,jdbcType=INTEGER},
+			currWorkNo = #{currWorkNo,jdbcType=VARCHAR},
+			
+			AddTime=#{addTime,jdbcType=TIMESTAMP},
+			remarks=#{remarks,jdbcType=VARCHAR},
+			UserId=#{userId,jdbcType=INTEGER}
+			</insert>
+			<delete id="deleteatwork" parameterType="com.banbo.entity.KqAtwork">
+
+	delete 	 from kq_atwork where ClientId=#{clientId} and UserId=#{userId}
+
+</delete>
+<!-- 正式项目开始代码end -->
+  	
+</mapper>   

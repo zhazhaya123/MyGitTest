@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banbo.mapper.KqDaysMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.banbo.entity.KqDays" >
+	<result column="Did" property="did"/>
+	<result column="ClientId" property="clientId"/>
+	<result column="UserId" property="userId"/>
+	<result column="Year" property="year"/>
+	<result column="Month" property="month"/>
+	<result column="Date" property="date"/>
+	<result column="InTime" property="inTime"/>
+	<result column="OutTime" property="outTime"/>
+		<result column="AmIntime" property="amIntime"/>
+	<result column="AmOuttime" property="amOuttime"/>
+		<result column="PmIntime" property="pmIntime"/>
+	<result column="PmOuttime" property="pmOuttime"/>
+		<result column="InTime" property="inTime"/>
+	<result column="OutTime" property="outTime"/>
+	<result column="AddTime" property="addTime"/>
+	<result column="Remarks" property="remarks"/>
+	<result column="WorkTimeminute" property="workTimeminute"/>
+	
+</resultMap>
+       
+<!-- kq_days table all fields -->
+<sql id="Base_Column_List" >
+	 Did,ClientId,UserId,Year,Month,Date,InTime,OutTime,AmIntime,AmOuttime,PmIntime,PmOuttime,AddTime,Remarks,workTimeminute
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="condition.did != null and condition.did != ''" >
+	    and Did =  #{condition.did}
+	</if>
+	<if test="condition.clientId != null and condition.clientId != ''" >
+	    and ClientId =  #{condition.clientId}
+	</if>
+	<if test="condition.userId != null and condition.userId != ''" >
+	    and UserId =  #{condition.userId}
+	</if>
+	<if test="condition.year != null and condition.year != ''" >
+	    and Year =  #{condition.year}
+	</if>
+	<if test="condition.month != null and condition.month != ''" >
+	    and Month =  #{condition.month}
+	</if>
+	<if test="condition.date != null and condition.date != ''" >
+	    and Date =  #{condition.date}
+	</if>
+	<if test="condition.inTime != null and condition.inTime != ''" >
+	    and InTime =  #{condition.inTime}
+	</if>
+	<if test="condition.outTime != null and condition.outTime != ''" >
+	    and OutTime =  #{condition.outTime}
+	</if>
+	<if test="condition.addTime != null and condition.addTime != ''" >
+	    and AddTime =  #{condition.addTime}
+	</if>
+	<if test="condition.remarks != null and condition.remarks != ''" >
+	    and Remarks =  #{condition.remarks}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into kq_days(Did,ClientId,UserId,Year,Month,Date,InTime,OutTime,AmIntime,AmOuttime,PmIntime,PmOuttime,AddTime,Remarks)
+ values(#{did},#{clientId},#{userId},#{year},#{month},#{date},#{inTime},#{outTime},#{amIntime},#{amOuttime},#{pmIntime},#{pmOuttime},#{addTime},#{remarks})
+</insert>
+
+<!-- 根据id，修改记录-->  
+<!--  <update id="update" parameterType="Object" >
+  update kq_days set ClientId=#{clientId},UserId=#{userId},Year=#{year},Month=#{month},Date=#{date},InTime=#{inTime},OutTime=#{outTime},AddTime=#{addTime},Remarks=#{remarks} where Did=#{did}
+ </update> -->
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update kq_days set 
+	<trim  suffixOverrides="," >
+	<if test="clientId != null  ">
+		ClientId=#{clientId},
+	</if>
+	<if test="userId != null  ">
+		UserId=#{userId},
+	</if>
+	<if test="year != null  ">
+		Year=#{year},
+	</if>
+	<if test="month != null  ">
+		Month=#{month},
+	</if>
+	<if test="date != null  ">
+		Date=#{date},
+	</if>
+	<if test="inTime != null  ">
+		InTime=#{inTime},
+	</if>
+	<if test="outTime != null  ">
+		OutTime=#{outTime},
+	</if>
+	<if test="amIntime != null  ">
+		amIntime=#{amIntime},
+	</if>
+	<if test="amOuttime != null  ">
+		amOuttime=#{amOuttime},
+	</if>
+		<if test="pmIntime != null  ">
+		pmIntime=#{pmIntime},
+	</if>
+	<if test="pmOuttime != null  ">
+		pmOuttime=#{pmOuttime},
+	</if>
+	<if test="addTime != null  ">
+		AddTime=#{addTime},
+	</if>
+	<if test="remarks != null  ">
+		Remarks=#{remarks},
+	</if>
+	</trim> where Did=#{did}
+</update>
+
+<!-- 删除记录 -->
+<!-- <delete id="delete" parameterType="Object">
+	delete 	 from kq_days where Did = #{did}
+</delete> -->
+ 
+<!-- 根据id查询 日考勤记录表 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from kq_days where Did = #{did}
+</select>
+
+<!-- 日考勤记录表 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from kq_days 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询日考勤记录表列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from kq_days 
+	<include refid="Example_Where_Clause"/>
+	<if test="orderByClause != null and orderByClause != ''" >
+       order by  ${orderByClause}
+    </if>
+    <if test="limitClause != null and limitClause != ''" >
+       ${limitClause}
+    </if>
+</select>
+
+
+
+
+<!-- 正式项目开始代码begin -->
+<insert id="insertDays" useGeneratedKeys="true"
+		parameterType="com.banbo.entity.KqDays">
+
+			insert into kq_days (ClientId,UserId,Year,Month,Date,InTime,OutTime,AmIntime,AmOuttime,PmIntime,PmOuttime,AddTime,Remarks,workTimeminute)
+			values (#{clientId,jdbcType=INTEGER}, 
+			 #{userId,jdbcType=INTEGER},#{year,jdbcType=VARCHAR},
+			#{month,jdbcType=VARCHAR},
+			#{date,jdbcType=VARCHAR}, #{inTime,jdbcType=VARCHAR},
+			#{outTime,jdbcType=VARCHAR},
+			#{amIntime,jdbcType=VARCHAR},#{amOuttime,jdbcType=VARCHAR},#{pmIntime,jdbcType=VARCHAR},#{pmOuttime,jdbcType=VARCHAR},
+		    #{addTime,jdbcType=TIMESTAMP},
+			#{remarks,jdbcType=VARCHAR},
+			#{workTimeminute,jdbcType=INTEGER}
+			)
+		
+	</insert>
+	 <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateDays" parameterType="com.banbo.entity.KqDays" >
+		
+	update kq_days set 
+	<trim  suffixOverrides="," >
+	<if test="clientId != null  ">
+		ClientId=#{clientId,jdbcType=INTEGER},
+	</if>
+	<if test="userId != null  ">
+		userId=#{userId,jdbcType=INTEGER},
+	</if>
+	<if test="year != null  ">
+		year=#{year,jdbcType=VARCHAR},
+	</if>
+	<if test="month != null  ">
+		month=#{month,jdbcType=VARCHAR},
+	</if>
+	<if test="date != null  ">
+		date=#{date,jdbcType=VARCHAR}, 
+	</if>
+	<if test="inTime != null  ">
+		inTime= #{inTime,jdbcType=VARCHAR},
+	</if>
+	<if test="outTime != null  ">
+		outTime= #{outTime,jdbcType=VARCHAR},
+	</if>
+	<if test="amIntime != null  ">
+		amIntime=#{amIntime,jdbcType=VARCHAR},
+	</if>
+	<if test="amOuttime != null  ">
+		amOuttime=#{amOuttime,jdbcType=VARCHAR},
+	</if>
+		<if test="pmIntime != null  ">
+		pmIntime=#{pmIntime,jdbcType=VARCHAR},
+	</if>
+	<if test="pmOuttime != null  ">
+		pmOuttime=#{pmOuttime,jdbcType=VARCHAR},
+	</if>
+	<if test="addTime != null  ">
+		AddTime=#{addTime,jdbcType=TIMESTAMP},
+	</if>
+	<if test="remarks != null  ">
+		Remarks=#{remarks,jdbcType=VARCHAR},
+	</if>
+		<if test="workTimeminute != null  ">
+		workTimeminute=#{workTimeminute,jdbcType=INTEGER},
+	</if>
+	</trim> where clientId=#{clientId,jdbcType=INTEGER} and userId=#{userId,jdbcType=INTEGER} and year=#{year,jdbcType=VARCHAR} and month=#{month,jdbcType=VARCHAR} and date=#{date,jdbcType=VARCHAR}
+
+</update>
+<!-- 删除记录 -->
+<delete id="deleteDays" parameterType="com.banbo.entity.KqDays">
+	delete 	 from kq_days where clientId=#{clientId,jdbcType=INTEGER} and userId=#{userId,jdbcType=INTEGER} and date=#{date,jdbcType=VARCHAR}
+</delete>
+<!-- 根据时间查询 考勤卡表 -->
+ <select id="querydate"  resultMap="BaseResultMap" parameterType="java.util.Map">
+	select <include refid="Base_Column_List" /> 
+	 from kq_days 
+	 <trim suffixOverrides="and">
+			<where>
+				<if test="year!=null"> year = #{year} and </if>
+				<if test="month!=null"> month = #{month} and </if>
+				<if test="date!=null"> date = #{date} and </if>
+				<if test="userId!=null"> userId = #{userId} and </if>
+				<if test="clientId!=null"> clientId = #{clientId}</if>
+				
+			</where>
+		</trim>
+</select> 
+<insert id="insertorupdateDays" useGeneratedKeys="true"
+		parameterType="com.banbo.entity.KqDays">
+
+			insert into kq_days (ClientId,UserId,Year,Month,Date,InTime,OutTime,AmIntime,AmOuttime,PmIntime,PmOuttime,AddTime,Remarks,workTimeminute)
+			values (#{clientId,jdbcType=INTEGER}, 
+			 #{userId,jdbcType=INTEGER},#{year,jdbcType=VARCHAR},
+			#{month,jdbcType=VARCHAR},
+			#{date,jdbcType=VARCHAR}, #{inTime,jdbcType=VARCHAR},
+			#{outTime,jdbcType=VARCHAR},
+			#{amIntime,jdbcType=VARCHAR},#{amOuttime,jdbcType=VARCHAR},#{pmIntime,jdbcType=VARCHAR},#{pmOuttime,jdbcType=VARCHAR},
+		    #{addTime,jdbcType=TIMESTAMP},
+			#{remarks,jdbcType=VARCHAR},
+			#{workTimeminute,jdbcType=INTEGER})
+			ON DUPLICATE KEY UPDATE
+			clientId=#{clientId,jdbcType=INTEGER}, 
+			 userId=#{userId,jdbcType=INTEGER},
+			 year=#{year,jdbcType=VARCHAR},
+			month=#{month,jdbcType=VARCHAR},
+			date=#{date,jdbcType=VARCHAR}, 
+
+			outTime=#{outTime,jdbcType=VARCHAR},
+	
+	<if test="amOuttime != null  ">
+		amOuttime=#{amOuttime,jdbcType=VARCHAR},
+	</if>
+
+	<if test="pmOuttime != null  ">
+		pmOuttime=#{pmOuttime,jdbcType=VARCHAR},
+	</if>
+		    addTime=#{addTime,jdbcType=TIMESTAMP},
+			remarks=#{remarks,jdbcType=VARCHAR}
+			
+		
+	</insert>
+
+<!-- 正式项目开始代码end -->
+  	
+</mapper>   

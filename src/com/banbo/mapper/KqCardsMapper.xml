@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banbo.mapper.KqCardsMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.banbo.entity.KqCards" >
+	<result column="Cid" property="cid"/>
+	<result column="ClientId" property="clientId"/>
+	<result column="CardNo" property="cardNo"/>
+	<result column="WorkNo" property="workNo"/>
+	<result column="Status" property="status"/>
+	<result column="UserId" property="userId"/>
+	<result column="ActiveTime" property="activeTime"/>
+	<result column="AddTime" property="addTime"/>
+	<result column="Remarks" property="remarks"/>
+</resultMap>
+       
+<!-- kq_cards table all fields -->
+<sql id="Base_Column_List" >
+	 Cid,ClientId,CardNo,WorkNo,Status,UserId,ActiveTime,AddTime,Remarks
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="condition.cid != null and condition.cid != ''" >
+	    and Cid =  #{condition.cid}
+	</if>
+	<if test="condition.clientId != null and condition.clientId != ''" >
+	    and ClientId =  #{condition.clientId}
+	</if>
+	<if test="condition.cardNo != null and condition.cardNo != ''" >
+	    and CardNo =  #{condition.cardNo}
+	</if>
+	<if test="condition.workNo != null and condition.workNo != ''" >
+	    and WorkNo =  #{condition.workNo}
+	</if>
+	<if test="condition.status != null and condition.status != ''" >
+	    and Status =  #{condition.status}
+	</if>
+	<if test="condition.userId != null and condition.userId != ''" >
+	    and UserId =  #{condition.userId}
+	</if>
+	<if test="condition.activeTime != null and condition.activeTime != ''" >
+	    and ActiveTime =  #{condition.activeTime}
+	</if>
+	<if test="condition.addTime != null and condition.addTime != ''" >
+	    and AddTime =  #{condition.addTime}
+	</if>
+	<if test="condition.remarks != null and condition.remarks != ''" >
+	    and Remarks =  #{condition.remarks}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into kq_cards(Cid,ClientId,CardNo,WorkNo,Status,UserId,ActiveTime,AddTime,Remarks)
+ values(#{cid},#{clientId},#{cardNo},#{workNo},#{status},#{userId},#{activeTime},#{addTime},#{remarks})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update kq_cards set ClientId=#{clientId},CardNo=#{cardNo},WorkNo=#{workNo},Status=#{status},UserId=#{userId},ActiveTime=#{activeTime},AddTime=#{addTime},Remarks=#{remarks} where Cid=#{cid}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update kq_cards set 
+	<trim  suffixOverrides="," >
+	<if test="clientId != null  ">
+		ClientId=#{clientId},
+	</if>
+	<if test="cardNo != null  ">
+		CardNo=#{cardNo},
+	</if>
+	<if test="workNo != null  ">
+		WorkNo=#{workNo},
+	</if>
+	<if test="status != null  ">
+		Status=#{status},
+	</if>
+	<if test="userId != null  ">
+		UserId=#{userId},
+	</if>
+	<if test="activeTime != null  ">
+		ActiveTime=#{activeTime},
+	</if>
+	<if test="addTime != null  ">
+		AddTime=#{addTime},
+	</if>
+	<if test="remarks != null  ">
+		Remarks=#{remarks},
+	</if>
+	</trim> where Cid=#{cid}
+</update>
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete 	 from kq_cards where Cid = #{cid}
+</delete>
+ 
+<!-- 根据id查询 考勤卡表 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from kq_cards where Cid = #{cid}
+</select>
+
+<!-- 考勤卡表 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from kq_cards 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询考勤卡表列表 -->
+<!-- <select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from kq_cards 
+	<include refid="Example_Where_Clause"/>
+	<if test="orderByClause != null and orderByClause != ''" >
+       order by  ${orderByClause}
+    </if>
+    <if test="limitClause != null and limitClause != ''" >
+       ${limitClause}
+    </if>
+</select> -->
+
+
+
+
+<!-- 正式项目开始代码begin -->
+<!-- 查询考勤卡表列表 -->
+	<select id="selectLastWorkNo" resultType="com.banbo.entity.KqCards" >
+		select * from kq_cards order by   WorkNo+0 desc limit 1
+	</select>
+	
+	<insert id="insertKqCard" parameterType="com.banbo.entity.KqCards">
+		  insert into kq_cards(ClientId,CardNo,WorkNo,Status,UserId,ActiveTime,AddTime,Remarks)
+ values(#{clientId},#{cardNo},#{workNo},#{status},#{userId},#{activeTime},#{addTime},#{remarks})
+	</insert>
+	
+	<update id="updateKqCard" parameterType="com.banbo.entity.KqCards">
+		update kq_cards set 
+			<trim  suffixOverrides="," >
+			<if test="clientId != null  ">
+				ClientId=#{clientId},
+			</if>
+			<if test="cardNo != null  ">
+				CardNo=#{cardNo},
+			</if>
+			<if test="workNo != null  ">
+				WorkNo=#{workNo},
+			</if>
+			<if test="status != null  ">
+				Status=#{status},
+			</if>
+			<if test="activeTime != null  ">
+				ActiveTime=#{activeTime},
+			</if>
+			<if test="addTime != null  ">
+				AddTime=#{addTime},
+			</if>
+			<if test="remarks != null  ">
+				Remarks=#{remarks},
+			</if>
+			</trim> where Cid=#{cid}
+	
+	</update>
+	
+	<!-- 根据cardNo查询 考勤卡表 -->
+ <select id="queryUserId"  resultMap="BaseResultMap" parameterType="java.util.Map">
+	select <include refid="Base_Column_List" /> 
+	 from kq_cards 
+	 <trim suffixOverrides="and">
+			<where>
+				<if test="cardNo!=null"> cardNo = #{cardNo} and </if>
+				<if test="userId!=null"> userId != #{userId} and </if>
+				<if test="clientId!=null"> clientId = #{clientId}</if>
+				
+			</where>
+		</trim>
+</select> 
+
+
+	<select id="selectCid" parameterType="com.banbo.entity.KqUsers"  resultType="com.banbo.entity.KqCards">
+		SELECT * FROM `kq_cards` where CardNo=#{currCardNo} LIMIT 1
+	
+	</select>
+<!-- 正式项目开始代码end -->
+  	
+</mapper>   

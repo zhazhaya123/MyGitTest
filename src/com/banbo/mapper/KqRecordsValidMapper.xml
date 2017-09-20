@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banbo.mapper.KqRecordsValidMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.banbo.entity.KqRecordsValid" >
+	<result column="Rid" property="rid"/>
+	<result column="ClientId" property="clientId"/>
+	<result column="RecordId" property="recordId"/>
+	<result column="CardNo" property="cardNo"/>
+	<result column="RecordTime" property="recordTime"/>
+	<result column="ControlSN" property="controlSN"/>
+	<result column="CameraSN" property="cameraSN"/>
+	<result column="NVRChannel" property="nvrChannel"/>
+	<result column="DoorNo" property="doorNo"/>
+	<result column="AreaType" property="areaType"/>
+	<result column="RecType" property="recType"/>
+	<result column="AddTime" property="addTime"/>
+	<result column="RecordDate" property="recordDate"/>
+	<result column="Remarks" property="remarks"/>
+</resultMap>
+       
+<!-- kq_records table all fields -->
+<sql id="Base_Column_List" >
+	 Rid,ClientId,RecordId,CardNo,RecordTime,ControlSN,CameraSN,NVRChannel,DoorNo,AreaType,RecType,AddTime,Remarks,recordDate
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="condition.rid != null and condition.rid != ''" >
+	    and Rid =  #{condition.rid}
+	</if>
+	<if test="condition.clientId != null and condition.clientId != ''" >
+	    and ClientId =  #{condition.clientId}
+	</if>
+	<if test="condition.recordId != null and condition.recordId != ''" >
+	    and RecordId =  #{condition.recordId}
+	</if>
+	<if test="condition.cardNo != null and condition.cardNo != ''" >
+	    and CardNo =  #{condition.cardNo}
+	</if>
+	<if test="condition.recordTime != null and condition.recordTime != ''" >
+	    and RecordTime =  #{condition.recordTime}
+	</if>
+	<if test="condition.controlSN != null and condition.controlSN != ''" >
+	    and ControlSN =  #{condition.controlSN}
+	</if>
+	<if test="condition.cameraSN != null and condition.cameraSN != ''" >
+	    and CameraSN =  #{condition.cameraSN}
+	</if>
+	<if test="condition.nvrChannel != null and condition.nvrChannel != ''" >
+	    and NVRChannel =  #{condition.nvrChannel}
+	</if>
+	<if test="condition.doorNo != null and condition.doorNo != ''" >
+	    and DoorNo =  #{condition.doorNo}
+	</if>
+	<if test="condition.areaType != null and condition.areaType != ''" >
+	    and AreaType =  #{condition.areaType}
+	</if>
+	<if test="condition.recType != null and condition.recType != ''" >
+	    and RecType =  #{condition.recType}
+	</if>
+	<if test="condition.addTime != null and condition.addTime != ''" >
+	    and AddTime =  #{condition.addTime}
+	</if>
+	<if test="condition.remarks != null and condition.remarks != ''" >
+	    and Remarks =  #{condition.remarks}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into kq_records(Rid,ClientId,RecordId,CardNo,RecordTime,ControlSN,CameraSN,NVRChannel,DoorNo,AreaType,RecType,AddTime,Remarks)
+ values(#{rid},#{clientId},#{recordId},#{cardNo},#{recordTime},#{controlSN},#{cameraSN},#{nvrChannel},#{doorNo},#{areaType},#{recType},#{addTime},#{remarks})
+</insert>
+
+<!-- 根据id，修改记录-->  
+<!--  <update id="update" parameterType="Object" >
+  update kq_records set ClientId=#{clientId},RecordId=#{recordId},CardNo=#{cardNo},RecordTime=#{recordTime},ControlSN=#{controlSN},CameraSN=#{cameraSN},NVRChannel=#{nvrChannel},DoorNo=#{doorNo},AreaType=#{areaType},RecType=#{recType},AddTime=#{addTime},Remarks=#{remarks} where Rid=#{rid}
+ </update> -->
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update kq_records set 
+	<trim  suffixOverrides="," >
+	<if test="clientId != null  ">
+		ClientId=#{clientId},
+	</if>
+	<if test="recordId != null  ">
+		RecordId=#{recordId},
+	</if>
+	<if test="cardNo != null  ">
+		CardNo=#{cardNo},
+	</if>
+	<if test="recordTime != null  ">
+		RecordTime=#{recordTime},
+	</if>
+	<if test="controlSN != null  ">
+		ControlSN=#{controlSN},
+	</if>
+	<if test="cameraSN != null  ">
+		CameraSN=#{cameraSN},
+	</if>
+	<if test="nvrChannel != null  ">
+		NVRChannel=#{nvrChannel},
+	</if>
+	<if test="doorNo != null  ">
+		DoorNo=#{doorNo},
+	</if>
+	<if test="areaType != null  ">
+		AreaType=#{areaType},
+	</if>
+	<if test="recType != null  ">
+		RecType=#{recType},
+	</if>
+	<if test="addTime != null  ">
+		AddTime=#{addTime},
+	</if>
+	<if test="remarks != null  ">
+		Remarks=#{remarks},
+	</if>
+	</trim> where Rid=#{rid}
+</update>
+
+<!-- 删除记录 -->
+<!-- <delete id="delete" parameterType="Object">
+	delete 	 from kq_records where Rid = #{rid}
+</delete> -->
+ 
+<!-- 根据id查询 刷卡记录表 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from kq_records where Rid = #{rid}
+</select>
+
+<!-- 刷卡记录表 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from kq_records 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询刷卡记录表列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from kq_records 
+	<include refid="Example_Where_Clause"/>
+	<if test="orderByClause != null and orderByClause != ''" >
+       order by  ${orderByClause}
+    </if>
+    <if test="limitClause != null and limitClause != ''" >
+       ${limitClause}
+    </if>
+</select>
+
+
+
+
+<!-- 正式项目开始代码begin -->
+<insert id="insert" useGeneratedKeys="true"
+		parameterType="com.banbo.entity.KqRecordsValid">
+
+			insert into kq_records_valid(ClientId,RecordId,CardNo,RecordTime,ControlSN,CameraSN,
+			NVRChannel,DoorNo,AreaType,RecType,AddTime,RecordDate,Remarks)
+			values (#{clientId,jdbcType=INTEGER}, 
+			 #{recordId,jdbcType=INTEGER},#{cardNo,jdbcType=VARCHAR},
+			#{recordTime,jdbcType=VARCHAR},
+			#{controlSN,jdbcType=VARCHAR}, #{cameraSN,jdbcType=VARCHAR},
+			#{nvrChannel,jdbcType=INTEGER},
+			#{doorNo,jdbcType=INTEGER},
+			#{areaType,jdbcType=INTEGER},
+			#{recType,jdbcType=INTEGER},
+		    #{addTime,jdbcType=TIMESTAMP},
+		    #{recordDate,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR})
+		
+	</insert>
+	 <!-- 修改记录，只修改只不为空的字段 -->
+<update id="update" parameterType="com.banbo.entity.KqRecordsValid" >
+		
+	update kq_records_valid set 
+	<trim  suffixOverrides="," >
+	<if test="clientId != null  ">
+		ClientId=#{clientId,jdbcType=INTEGER},
+	</if>
+	<if test="recordId != null  ">
+		recordId=#{recordId,jdbcType=INTEGER},
+	</if>
+	<if test="cardNo != null  ">
+		cardNo=#{cardNo,jdbcType=VARCHAR},
+	</if>
+	<if test="recordTime != null  ">
+		recordTime=#{recordTime,jdbcType=VARCHAR},
+	</if>
+	<if test="controlSN != null  ">
+		controlSN=#{controlSN,jdbcType=VARCHAR},
+	</if>
+	<if test="cameraSN != null  ">
+		cameraSN=#{cameraSN,jdbcType=VARCHAR},
+	</if>
+	<if test="nvrChannel != null  ">
+		nvrChannel=#{nvrChannel,jdbcType=INTEGER},
+	</if>
+	<if test="doorNo != null  ">
+		doorNo=#{doorNo,jdbcType=INTEGER},
+	</if>
+	<if test="areaType != null  ">
+		areaType=#{areaType,jdbcType=INTEGER},
+	</if>
+	<if test="recType != null  ">
+		recType=#{recType,jdbcType=INTEGER},
+	</if>
+	<if test="addTime != null  ">
+		AddTime=#{addTime,jdbcType=TIMESTAMP},
+	</if>
+	<if test="recordDate != null  ">
+		RecordDate=#{recordDate,jdbcType=VARCHAR},
+	</if>
+	
+	<if test="remarks != null  ">
+		Remarks=#{remarks,jdbcType=VARCHAR},
+	</if>
+	</trim> where clientId=#{clientId,jdbcType=INTEGER} and recordId=#{recordId,jdbcType=VARCHAR}
+
+</update>
+<!-- 删除记录 -->
+<delete id="delete" parameterType="com.banbo.entity.KqRecordsValid">
+	delete 	 from kq_records_valid where clientId=#{clientId,jdbcType=INTEGER} and recordId=#{recordId,jdbcType=VARCHAR}
+</delete>
+<!-- 根据条件查询 考勤记录表 -->
+ <select id="queryrecords"  resultMap="BaseResultMap" parameterType="java.util.Map">
+	select <include refid="Base_Column_List" /> 
+	 from kq_records_valid 
+	 <trim suffixOverrides="and">
+			<where>
+				<if test="cardNo!=null"> cardNo = #{cardNo} and </if>
+				<if test="recordTime!=null"> recordTime = #{recordTime} and </if>
+				<if test="controlSN!=null"> controlSN = #{controlSN} and </if>
+				<if test="cameraSN!=null"> cameraSN = #{cameraSN} and </if>
+				<if test="nvrChannel!=null"> nvrChannel = #{nvrChannel} and </if>
+				<if test="doorNo!=null"> doorNo = #{doorNo} and </if>
+				<if test="areaType!=null"> areaType = #{areaType} and </if>
+				<if test="recType!=null"> recType = #{recType} and </if>
+				<if test="clientId!=null"> clientId = #{clientId}</if>
+				
+			</where>
+		</trim>
+</select> 
+<!-- 存在修改 -->
+<insert id="insertorupdateRecord" useGeneratedKeys="true"
+		parameterType="com.banbo.entity.KqRecordsValid">
+
+			insert into kq_records_valid (ClientId,RecordId,CardNo,RecordTime,ControlSN,CameraSN,
+			NVRChannel,DoorNo,AreaType,RecType,AddTime,RecordDate,Remarks)
+			values (#{clientId,jdbcType=INTEGER}, 
+			 #{recordId,jdbcType=INTEGER},#{cardNo,jdbcType=VARCHAR},
+			#{recordTime,jdbcType=VARCHAR},
+			#{controlSN,jdbcType=VARCHAR}, #{cameraSN,jdbcType=VARCHAR},
+			#{nvrChannel,jdbcType=INTEGER},
+			#{doorNo,jdbcType=INTEGER},
+			#{areaType,jdbcType=INTEGER},
+			#{recType,jdbcType=INTEGER},
+		    #{addTime,jdbcType=TIMESTAMP},
+		    #{recordDate,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR})
+		ON DUPLICATE KEY UPDATE
+		clientId=#{clientId,jdbcType=INTEGER}, 
+			 recordId=#{recordId,jdbcType=INTEGER},
+			 cardNo=#{cardNo,jdbcType=VARCHAR},
+			recordTime=#{recordTime,jdbcType=VARCHAR},
+			controlSN=#{controlSN,jdbcType=VARCHAR}, 
+			cameraSN=#{cameraSN,jdbcType=VARCHAR},
+			nvrChannel=#{nvrChannel,jdbcType=INTEGER},
+			doorNo=#{doorNo,jdbcType=INTEGER},
+			areaType=#{areaType,jdbcType=INTEGER},
+			recType=#{recType,jdbcType=INTEGER},
+		    addTime=#{addTime,jdbcType=TIMESTAMP},
+		    recordDate=#{recordDate,jdbcType=VARCHAR},
+			remarks=#{remarks,jdbcType=VARCHAR}
+	</insert>
+	<!-- 查询刷卡记录表列表 -->
+<select id="queryByOne" resultMap="BaseResultMap"  parameterType="java.util.Map">
+select <include refid="Base_Column_List" /> 
+	 from kq_records_valid 
+	 <trim suffixOverrides="and">
+			<where>
+			recType=1
+				<if test="cardNo!=null"> and cardNo = #{cardNo} </if>
+				<if test="recordTime!=null">and  LEFT(RecordTime,10) = #{recordTime}</if>
+				<if test="controlSN!=null">and controlSN = #{controlSN}  </if>
+				<if test="cameraSN!=null">and cameraSN = #{cameraSN}  </if>
+				<if test="nvrChannel!=null">and nvrChannel = #{nvrChannel}  </if>
+				<if test="doorNo!=null">and doorNo = #{doorNo}  </if>
+				<if test="areaType!=null">and areaType = #{areaType}  </if>
+			
+				<if test="clientId!=null"> and clientId = #{clientId}</if>
+				<if test="recordDate!=null"> and recordDate = #{recordDate}</if>
+				
+			</where>
+		</trim>
+		order by recordTime desc
+		limit 1
+</select>
+<!-- 正式项目开始代码end -->
+  	
+</mapper>   

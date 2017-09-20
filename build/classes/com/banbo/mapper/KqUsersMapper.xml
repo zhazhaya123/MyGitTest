@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banbo.mapper.KqUsersMapper">
+	<!-- Result Map -->
+	<resultMap id="BaseResultMap" type="com.banbo.entity.KqUsers">
+		<result column="Uid" property="uid" />
+		<result column="ClientId" property="clientId" />
+		<result column="UserId" property="userId" />
+		<result column="GroupId" property="groupId" />
+		<result column="UserName" property="userName" />
+		<result column="CardId" property="cardId" />
+		<result column="Sex" property="sex" />
+		<result column="FromWhere" property="fromWhere" />
+		<result column="Address" property="address" />
+		<result column="Phone" property="phone" />
+		<result column="BankNo" property="bankNo" />
+		<result column="EnterDate" property="enterDate" />
+		<result column="OutDate" property="outDate" />
+		<result column="IsLeader" property="isLeader" />
+		<result column="Wages" property="wages" />
+		<result column="CurrWorkNo" property="currWorkNo" />
+		<result column="CurrCardNo" property="currCardNo" />
+		<result column="InsuranceDate" property="insuranceDate" />
+		<result column="ContractDate" property="contractDate" />
+		<result column="AddTime" property="addTime" />
+		<result column="Remarks" property="remarks" />
+		<result column="zk_Pin" property="pin" />
+		<result column="zk_Pri" property="pri" />
+		<result column="zk_Passwd" property="passwd" />
+		<result column="zk_Grp" property="grp" />
+		<result column="zk_Tz" property="tz" />
+		<result column="zk_FileName" property="fileName" />
+		<result column="zk_Size" property="size" />
+		<result column="zk_Content" property="content" />
+	</resultMap>
+
+	<!-- kq_users table all fields -->
+	<sql id="Base_Column_List">
+		Uid,ClientId,UserId,GroupId,UserName,CardId,Sex,FromWhere,Address,Phone,BankNo,EnterDate,OutDate,IsLeader,Wages,CurrWorkNo,CurrCardNo,InsuranceDate,ContractDate,AddTime,Remarks,currMonth,lastMonth,currYear
+	</sql>
+
+
+	<!-- 查询条件 -->
+	<sql id="Example_Where_Clause">
+		where 1=1
+		<trim suffixOverrides=",">
+			<if test="condition.uid != null and condition.uid != ''">
+				and Uid = #{condition.uid}
+			</if>
+			<if test="condition.clientId != null and condition.clientId != ''">
+				and ClientId = #{condition.clientId}
+			</if>
+			<if test="condition.userId != null and condition.userId != ''">
+				and UserId = #{condition.userId}
+			</if>
+			<if test="condition.groupId != null and condition.groupId != ''">
+				and GroupId = #{condition.groupId}
+			</if>
+			<if test="condition.userName != null and condition.userName != ''">
+				and UserName = #{condition.userName}
+			</if>
+			<if test="condition.cardId != null and condition.cardId != ''">
+				and CardId = #{condition.cardId}
+			</if>
+			<if test="condition.sex != null and condition.sex != ''">
+				and Sex = #{condition.sex}
+			</if>
+			<if test="condition.fromWhere != null and condition.fromWhere != ''">
+				and FromWhere = #{condition.fromWhere}
+			</if>
+			<if test="condition.address != null and condition.address != ''">
+				and Address = #{condition.address}
+			</if>
+			<if test="condition.phone != null and condition.phone != ''">
+				and Phone = #{condition.phone}
+			</if>
+			<if test="condition.bankNo != null and condition.bankNo != ''">
+				and BankNo = #{condition.bankNo}
+			</if>
+			<if test="condition.enterDate != null and condition.enterDate != ''">
+				and EnterDate = #{condition.enterDate}
+			</if>
+			<if test="condition.outDate != null and condition.outDate != ''">
+				and OutDate = #{condition.outDate}
+			</if>
+			<if test="condition.isLeader != null and condition.isLeader != ''">
+				and IsLeader = #{condition.isLeader}
+			</if>
+			<if test="condition.wages != null and condition.wages != ''">
+				and Wages = #{condition.wages}
+			</if>
+			<if test="condition.currWorkNo != null and condition.currWorkNo != ''">
+				and CurrWorkNo = #{condition.currWorkNo}
+			</if>
+			<if test="condition.currCardNo != null and condition.currCardNo != ''">
+				and CurrCardNo = #{condition.currCardNo}
+			</if>
+			<if
+				test="condition.insuranceDate != null and condition.insuranceDate != ''">
+				and InsuranceDate = #{condition.insuranceDate}
+			</if>
+			<if test="condition.contractDate != null and condition.contractDate != ''">
+				and ContractDate = #{condition.contractDate}
+			</if>
+			<if test="condition.addTime != null and condition.addTime != ''">
+				and AddTime = #{condition.addTime}
+			</if>
+			<if test="condition.remarks != null and condition.remarks != ''">
+				and Remarks = #{condition.remarks}
+			</if>
+		</trim>
+	</sql>
+
+
+	<!-- 插入记录 -->
+	<insert id="add" parameterType="Object">
+		<selectKey resultType="java.lang.Integer" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into
+		kq_users(Uid,ClientId,UserId,GroupId,UserName,CardId,Sex,FromWhere,Address,Phone,BankNo,EnterDate,OutDate,IsLeader,Wages,CurrWorkNo,CurrCardNo,InsuranceDate,ContractDate,AddTime,Remarks)
+		values(#{uid},#{clientId},#{userId},#{groupId},#{userName},#{cardId},#{sex},#{fromWhere},#{address},#{phone},#{bankNo},#{enterDate},#{outDate},#{isLeader},#{wages},#{currWorkNo},#{currCardNo},#{insuranceDate},#{contractDate},#{addTime},#{remarks})
+	</insert>
+
+	<!-- 根据id，修改记录 -->
+	<update id="update" parameterType="Object">
+		update kq_users set
+		ClientId=#{clientId},UserId=#{userId},GroupId=#{groupId},UserName=#{userName},CardId=#{cardId},Sex=#{sex},FromWhere=#{fromWhere},Address=#{address},Phone=#{phone},BankNo=#{bankNo},EnterDate=#{enterDate},OutDate=#{outDate},IsLeader=#{isLeader},Wages=#{wages},CurrWorkNo=#{currWorkNo},CurrCardNo=#{currCardNo},InsuranceDate=#{insuranceDate},ContractDate=#{contractDate},AddTime=#{addTime},Remarks=#{remarks}
+		where Uid=#{uid}
+	</update>
+
+	<!-- 修改记录，只修改只不为空的字段 -->
+	<update id="updateBySelective" parameterType="Object">
+		update kq_users set
+		<trim suffixOverrides=",">
+			<if test="clientId != null  ">
+				ClientId=#{clientId},
+			</if>
+			<if test="userId != null  ">
+				UserId=#{userId},
+			</if>
+			<if test="groupId != null  ">
+				GroupId=#{groupId},
+			</if>
+			<if test="userName != null  ">
+				UserName=#{userName},
+			</if>
+			<if test="cardId != null  ">
+				CardId=#{cardId},
+			</if>
+			<if test="sex != null  ">
+				Sex=#{sex},
+			</if>
+			<if test="fromWhere != null  ">
+				FromWhere=#{fromWhere},
+			</if>
+			<if test="address != null  ">
+				Address=#{address},
+			</if>
+			<if test="phone != null  ">
+				Phone=#{phone},
+			</if>
+			<if test="bankNo != null  ">
+				BankNo=#{bankNo},
+			</if>
+			<if test="enterDate != null  ">
+				EnterDate=#{enterDate},
+			</if>
+			<if test="outDate != null  ">
+				OutDate=#{outDate},
+			</if>
+			<if test="isLeader != null  ">
+				IsLeader=#{isLeader},
+			</if>
+			<if test="wages != null  ">
+				Wages=#{wages},
+			</if>
+			<if test="currWorkNo != null  ">
+				CurrWorkNo=#{currWorkNo},
+			</if>
+			<if test="currCardNo != null  ">
+				CurrCardNo=#{currCardNo},
+			</if>
+			<if test="insuranceDate != null  ">
+				InsuranceDate=#{insuranceDate},
+			</if>
+			<if test="contractDate != null  ">
+				ContractDate=#{contractDate},
+			</if>
+			<if test="addTime != null  ">
+				AddTime=#{addTime},
+			</if>
+			<if test="remarks != null  ">
+				Remarks=#{remarks},
+			</if>
+		</trim>
+		where Uid=#{uid}
+	</update>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="Object">
+		delete from kq_users where Uid
+		= #{uid}
+	</delete>
+
+	<!-- 根据id查询 工人信息表 -->
+	<select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+		select
+		<include refid="Base_Column_List" />
+		from kq_users where Uid = #{uid}
+	</select>
+
+	<!-- 工人信息表 列表总数 -->
+	<select id="queryByCount" resultType="java.lang.Integer"
+		parameterType="Object">
+		select count(1) from kq_users
+		<include refid="Example_Where_Clause" />
+	</select>
+
+	<!-- 查询工人信息表列表 -->
+	<!-- <select id="queryByList" resultMap="BaseResultMap" parameterType="Object"> 
+		select <include refid="Base_Column_List"/> from kq_users <include refid="Example_Where_Clause"/> 
+		<if test="orderByClause != null and orderByClause != ''" > order by ${orderByClause} 
+		</if> <if test="limitClause != null and limitClause != ''" > ${limitClause} 
+		</if> </select> -->
+
+
+	<!-- 正式项目开始代码begin -->
+	<insert id="insertZkUser" parameterType="com.banbo.entity.KqUsers">
+	<selectKey resultType="java.lang.Integer" order="AFTER"
+			keyProperty="uid">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into
+		kq_users(ClientId,UserId,GroupId,UserName,CardId,Sex,FromWhere,Address,Phone,BankNo,EnterDate,OutDate,IsLeader,Wages,CurrWorkNo,CurrCardNo,InsuranceDate,ContractDate,AddTime,Remarks,zk_Pin,zk_Pri,zk_Passwd,zk_Grp,zk_Tz,zk_FileName,zk_Size,zk_Content)
+		values(#{clientId},#{userId},#{groupId},#{userName},#{cardId},#{sex},#{fromWhere},#{address},#{phone},#{bankNo},#{enterDate},#{outDate},#{isLeader},#{wages},#{currWorkNo},#{currCardNo},#{insuranceDate},#{contractDate},#{addTime},#{remarks},#{pin},#{pri},#{passwd},#{grp},#{tz},#{fileName},#{size},#{content})
+	</insert>
+	
+	<select id="selectZkUserByPin"  parameterType="String" resultType="com.banbo.entity.KqUsers">
+		select * from kq_users where zk_Pin=#{pin} limit 1;	
+	</select>
+	
+	<update id="updateZkUser" parameterType="com.banbo.entity.KqUsers">
+		update kq_users set
+		<trim suffixOverrides=",">
+			<if test="clientId != null  ">
+				ClientId=#{clientId},
+			</if>
+			<if test="userId != null  ">
+				UserId=#{userId},
+			</if>
+			<if test="groupId != null  ">
+				GroupId=#{groupId},
+			</if>
+			<if test="userName != null  ">
+				UserName=#{userName},
+			</if>
+			<if test="cardId != null  ">
+				CardId=#{cardId},
+			</if>
+			<if test="sex != null  ">
+				Sex=#{sex},
+			</if>
+			<if test="fromWhere != null  ">
+				FromWhere=#{fromWhere},
+			</if>
+			<if test="address != null  ">
+				Address=#{address},
+			</if>
+			<if test="phone != null  ">
+				Phone=#{phone},
+			</if>
+			<if test="bankNo != null  ">
+				BankNo=#{bankNo},
+			</if>
+			<if test="enterDate != null  ">
+				EnterDate=#{enterDate},
+			</if>
+			<if test="outDate != null  ">
+				OutDate=#{outDate},
+			</if>
+			<if test="isLeader != null  ">
+				IsLeader=#{isLeader},
+			</if>
+			<if test="wages != null  ">
+				Wages=#{wages},
+			</if>
+			<if test="currCardNo != null  ">
+				CurrCardNo=#{currCardNo},
+			</if>
+			<if test="insuranceDate != null  ">
+				InsuranceDate=#{insuranceDate},
+			</if>
+			<if test="contractDate != null  ">
+				ContractDate=#{contractDate},
+			</if>
+			<if test="addTime != null  ">
+				AddTime=#{addTime},
+			</if>
+			<if test="remarks != null  ">
+				Remarks=#{remarks},
+			</if>
+			<if test="pin != null">
+				zk_Pin=#{pin},
+			</if>
+			<if test="pri != null  ">
+				zk_Pri=#{pri},
+			</if>
+			<if test="passwd != null  ">
+				zk_Passwd=#{passwd},
+			</if>
+			<if test="grp != null  ">
+				zk_Grp=#{grp},
+			</if>
+			<if test="tz != null  ">
+				zk_Tz=#{tz},
+			</if>
+			<if test="fileName != null  ">
+				zk_FileName=#{fileName},
+			</if>
+			<if test="size != null  ">
+				zk_Size=#{size},
+			</if>
+			<if test="content != null  ">
+				zk_Content=#{content},
+			</if>
+			
+		</trim>
+		where zk_Pin=#{pin}
+	</update>
+
+	<!-- 正式项目开始代码end -->
+
+</mapper>   
